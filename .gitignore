@@ -1,12 +1,3 @@
-# Node.js
-node_modules/
-npm-debug.log
-yarn-error.log
-
-# Logs
-logs/
-*.log
-*.log.*
 
 # Dependency directories
 jspm_packages/
@@ -34,4 +25,9 @@ Thumbs.db
 # Backend and databases
 backend/.env
 backend/_env/
-frontend/
+
+# Frontend
+frontend/node_modules/
+frontend/.env
+frontend/package-lock.json
+frontend/.next/
