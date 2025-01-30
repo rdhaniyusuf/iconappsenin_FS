@@ -1,0 +1,9 @@
+Flask==2.0.2
+Flask-RESTful==0.3.9
+Flask-Cors==3.0.10
+APScheduler==3.7.0
+openpyxl==3.0.9
+cppy==1.1.0
+reportlab==3.6.1
+passlib==1.7.4
+bcrypt==3.2.0
