@@ -4,6 +4,12 @@ Flask-Cors==3.0.10
 APScheduler==3.7.0
 openpyxl==3.0.9
 cppy==1.1.0
-reportlab==3.6.1
+WeasyPrint==53.3
 passlib==1.7.4
 bcrypt==3.2.0
+numpy
+pandas
+jwt
+requests
+jupyterlab
+notebook
