@@ -2,8 +2,9 @@ import jwt
 import datetime
 from functools import wraps
 from flask import request, jsonify
+import os
 
-SECRET_KEY = 'your_secret_key'
+SECRET_KEY = os.getenv('TOKEN_ACCESS_JWT')
 
 def token_required(f):
     @wraps(f)

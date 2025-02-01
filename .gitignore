@@ -25,9 +25,12 @@ Thumbs.db
 # Backend and databases
 backend/.env
 backend/_env/
+backend/_venv/
 
 # Frontend
 frontend/node_modules/
 frontend/.env
 frontend/package-lock.json
 frontend/.next/
+
+backend/*/*/__pycache__/
