@@ -34,3 +34,9 @@ frontend/package-lock.json
 frontend/.next/
 
 backend/*/*/__pycache__/
+
+frontend-rf/node_modules/
+frontend-rf/node_modules/
+frontend-rf/.env
+frontend-rf/package-lock.json
+frontend-rf/.next/
