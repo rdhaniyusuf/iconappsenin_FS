@@ -9,12 +9,13 @@ interface AlertCompProps {
     hrefA:string;
 }
 
-export default function AlertComp({ colorA, contentA, titleA, buttonTextA,hrefA }: AlertCompProps) {
+export default function AlertComp({ colorA, contentA, titleA, buttonTextA, hrefA }: AlertCompProps) {
+    const router = useRouter();
+
     if (typeof window === 'undefined') {
+        console.log(window);
         return null;
     }
-
-    const router = useRouter();
 
     return (
         <div className="flex items-center justify-center">

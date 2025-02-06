@@ -1,7 +1,7 @@
-interface UserCredentials {
-    username: string;
-    password: string;
-}
+// interface UserCredentials {
+//     username: string;
+//     password: string;
+// }
 
 export async function loginUser(username: string, password: string): Promise<boolean> {
     // Simulasi autentikasi

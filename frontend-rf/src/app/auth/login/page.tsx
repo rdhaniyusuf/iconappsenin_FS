@@ -3,7 +3,7 @@ import React from "react";
 import { loginUser } from "@/utils/Auth";
 import { useRouter } from "next/navigation";
 import AuthFormComp from "@/components/AuthForm";
-import { Image } from "@heroui/react";
+// import { Image } from "@heroui/react";
 export default function LoginPage() {
   const router = useRouter();
 

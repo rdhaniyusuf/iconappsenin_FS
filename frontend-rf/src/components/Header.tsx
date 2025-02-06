@@ -59,7 +59,7 @@ export default function HeaderComp() {
       </NavbarContent>
 
       <NavbarMenu>
-        {menuItems.map((item:any, index:any) => (
+        {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item.name}-${index}`}>
             <Link
               className="w-full"

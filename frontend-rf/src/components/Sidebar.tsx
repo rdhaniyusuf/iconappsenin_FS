@@ -1,10 +1,9 @@
 'use client';
 
-import { useState, createElement, FC } from 'react';
-import { Navbar } from '@heroui/react';
+import { useState, FC } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { Menu, X, Home, Settings, User } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { menuItems } from '@/utils/Helpers';
 
 interface SidebarProps {
