@@ -1,11 +1,17 @@
 'use client';
 import React from "react";
 import { loginUser } from "@/utils/Auth";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import AuthFormComp from "@/components/AuthForm";
+import { isAuthenticated } from "@/utils/Auth";
+import Loading from "@/components/Loading";
+import Alert from "@/components/Alert";
 // import { Image } from "@heroui/react";
 export default function LoginPage() {
   const router = useRouter();
+  const [loading, setLoading] = React.useState(false);
+  const [showAlert, setShowAlert] = React.useState(false);
+  const pathname = usePathname(); // Get current route
 
   const handleSubmit = async (username: string, password: string) => {
     const success = await loginUser(username, password);
@@ -18,6 +24,54 @@ export default function LoginPage() {
     }
   };
 
+  React.useEffect(() => {
+    setLoading(true);
+    const checkAuth = () => {
+      if (isAuthenticated() && pathname === "/auth/login") {
+        console.log(isAuthenticated())
+        setShowAlert(true);
+        // router.push("/");
+      }
+      setLoading(false);
+    }
+    const timer = setTimeout(checkAuth, 1000);
+    return () => clearTimeout(timer);
+  }, [pathname]);
+
+  return (
+    <>
+      {loading && (
+        <div className="w-full top-0 left-0 absolute min-h-screen backdrop-blur-sm z-10">
+          <div className="flex flex-col items-center min-h-screen justify-center">
+            <div className="mb-6">
+              <Loading />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {!loading && showAlert && (
+        <div className="w-full top-0 left-0 absolute min-h-screen backdrop-blur-sm z-10">
+          <div className="flex flex-col items-center min-h-screen justify-center">
+            <Alert
+              colorA="success"
+              contentA="You has login."
+              titleA="Access Granted"
+              buttonTextA="Back to Home"
+              hrefA="/"
+            />
+          </div>
+        </div>
+      )
+      }
+      {!loading && !showAlert && (
+        loginForm(handleSubmit)
+        )}
+    </>
+  )
+}
+
+const loginForm = (handleSubmit: any) => {
   return (
     <div className="grid 
     min-h-screen
@@ -52,6 +106,5 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }
-

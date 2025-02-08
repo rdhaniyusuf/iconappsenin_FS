@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { isAuthenticated } from "@/utils/Auth";
 import Loading from "@/components/Loading";
@@ -12,25 +12,31 @@ import { HeroUIProvider } from '@heroui/react'
 export function AppProviders({ children }: { children: React.ReactNode }) {
 
   const router = useRouter();
+  const pathname = usePathname(); // Get current route
   const [loading, setLoading] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!isAuthenticated()) {
+    setLoading(true); // Reset loading state on route change
+
+    const checkAuth = () => {
+      if (!isAuthenticated() && pathname !== "/auth/login") {
         setShowAlert(true);
       } else {
-        setLoading(false);
+        setShowAlert(false);
       }
-    }, 3000);
+      setLoading(false);
+    };
+
+    const timer = setTimeout(checkAuth, 1000); // Reduced delay for better UX
 
     return () => clearTimeout(timer);
-  }, [router]);
+  }, [pathname]); // Re-run when the route changes
 
   return (
     <HeroUIProvider>
       {loading && (
-        <div className="w-full top-0 left-0 absolute min-h-screen backdrop-blur-sm z-10 /30">
+        <div className="w-full top-0 left-0 absolute min-h-screen backdrop-blur-sm z-10">
           <div className="flex flex-col items-center min-h-screen justify-center">
             <div className="mb-6">
               <Loading />
@@ -38,8 +44,8 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       )}
-      {showAlert && (
-        <div className="w-full top-0 left-0 absolute min-h-screen backdrop-blur-sm z-10 /30">
+      {!loading && showAlert && pathname !== "/auth/login" && (
+        <div className="w-full top-0 left-0 absolute min-h-screen backdrop-blur-sm z-10">
           <div className="flex flex-col items-center min-h-screen justify-center">
             <Alert
               colorA="danger"
@@ -51,17 +57,20 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       )}
+
       {!loading && !showAlert && (
         <div className="min-h-screen z-0 flex">
-          <SidebarComp />
+          {pathname !== "/auth/login" && <SidebarComp />}
           <div className="flex-1">
-            <HeaderComp />
+            {pathname !== "/auth/login" && <HeaderComp />}
             <main className="p-6">
-              {children}  
+              {children}
             </main>
           </div>
         </div>
       )}
+
+
     </HeroUIProvider>
   )
 }
