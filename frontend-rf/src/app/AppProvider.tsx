@@ -31,7 +31,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
     const timer = setTimeout(checkAuth, 1000); // Reduced delay for better UX
 
     return () => clearTimeout(timer);
-  }, [pathname]); // Re-run when the route changes
+  }, [pathname]);
 
   return (
     <HeroUIProvider>
@@ -59,7 +59,6 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
       )}
 
       {!loading && !showAlert && (
-
         <div className="min-h-screen z-0 flex">
           {pathname !== "/auth/login" && <SidebarComp />}
           <div className="h-max flex-1">
@@ -72,8 +71,6 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       )}
-
-
     </HeroUIProvider>
   )
 }
