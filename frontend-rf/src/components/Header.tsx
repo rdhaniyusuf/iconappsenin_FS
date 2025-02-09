@@ -1,10 +1,11 @@
+'use client';
 import {
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarMenuToggle,
   NavbarMenu, NavbarMenuItem,
-  NavbarItem,
+  Tooltip,
   Link,
   DropdownItem,
   DropdownTrigger,
@@ -14,8 +15,9 @@ import {
   Image
 } from "@heroui/react";
 import { useState } from "react";
-
+import { useRouter } from "next/navigation";
 import { menuItems } from "@/utils/Helpers";
+import { getUser, logoutUser } from "@/utils/Auth";
 
 export const AppseninLogo = () => {
   return (
@@ -27,8 +29,18 @@ export const AppseninLogo = () => {
 export default function HeaderComp() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    logoutUser();
+    router.push("/auth/login");
+  }
+
+  const user = getUser();
+
+
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen} className="sticky top-0 z-50" classNames={{base:"justify-between", wrapper:'max-w-[100%]'}} >
+    <Navbar onMenuOpenChange={setIsMenuOpen} className="sticky top-0 z-50" classNames={{ base: "justify-between", wrapper: 'max-w-[100%]' }} >
       <NavbarContent>
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -40,31 +52,14 @@ export default function HeaderComp() {
         </NavbarBrand>
       </NavbarContent>
 
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Features
-          </Link>
-        </NavbarItem>
-        <NavbarItem isActive>
-          <Link aria-current="page" color="secondary" href="#">
-            Customers
-          </Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Integrations
-          </Link>
-        </NavbarItem>
-      </NavbarContent>
 
       <NavbarMenu>
         {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item.name}-${index}`}>
+          <NavbarMenuItem key={`${item.name}-${index}`} defaultValue={item.href}>
             <Link
               className="w-full"
               color="foreground"
-              href="#"
+              href={item.href}
               size="lg"
             >
               {item.name}
@@ -74,30 +69,38 @@ export default function HeaderComp() {
       </NavbarMenu>
 
       <NavbarContent as="div" justify="end">
+        <Tooltip showArrow placement="bottom"
+          content={
+            <div className="px-1 py-2">
+              <div className="text-small font-bold">Custom Role</div>
+            </div>
+          }
+        >
+          <div className="hidden xl:flex xl:flex-col xl:gap-1 xl:items-end xl:justify-center ">
+            <h4 className="text-small font-semibold leading-none text-default-800">{user?.username}</h4>
+          </div>
+        </Tooltip>
         <Dropdown placement="bottom-end">
           <DropdownTrigger>
             <Avatar
               isBordered
               as="button"
               className="transition-transform"
-              color="secondary"
-              name="Jason Hughes"
+              color="primary"
+              name={user?.username
+                ?.split('.')
+                .map(part => part.charAt(0))
+                .join('') || ""}
               size="sm"
-              src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
             />
           </DropdownTrigger>
-          <DropdownMenu aria-label="Profile Actions" variant="flat">
+          <DropdownMenu aria-label="Profile Actions" variant="flat" title="Profile Actions">
             <DropdownItem key="profile" className="h-14 gap-2">
               <p className="font-semibold">Signed in as</p>
-              <p className="font-semibold">zoey@example.com</p>
+              <p className="font-semibold">{user?.username}</p>
             </DropdownItem>
-            <DropdownItem key="settings">My Settings</DropdownItem>
-            <DropdownItem key="team_settings">Team Settings</DropdownItem>
-            <DropdownItem key="analytics">Analytics</DropdownItem>
-            <DropdownItem key="system">System</DropdownItem>
-            <DropdownItem key="configurations">Configurations</DropdownItem>
-            <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-            <DropdownItem key="logout" color="danger">
+            <DropdownItem key="team_settings" href="/user-settings">My Settings</DropdownItem>
+            <DropdownItem key="logout" color="danger" onPress={handleLogout}>
               Log Out
             </DropdownItem>
           </DropdownMenu>

@@ -42,7 +42,7 @@ const AuthFormComp: React.FC<AuthFormProps> = ({
 
     const toggleVisibility = () => setIsVisible(!isVisible);
     return (
-        <Form
+        <Form 
             className="w-full max-w-xs flex flex-col gap-4"
             validationBehavior="native"
             onSubmit={(e) => {

@@ -7,7 +7,7 @@ import Loading from "@/components/Loading";
 import Alert from "@/components/Alert";
 import HeaderComp from "@/components/Header";
 import SidebarComp from "@/components/Sidebar";
-import { HeroUIProvider } from '@heroui/react'
+import { HeroUIProvider, ScrollShadow } from '@heroui/react'
 
 export function AppProviders({ children }: { children: React.ReactNode }) {
 
@@ -59,13 +59,16 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
       )}
 
       {!loading && !showAlert && (
+
         <div className="min-h-screen z-0 flex">
           {pathname !== "/auth/login" && <SidebarComp />}
-          <div className="flex-1">
+          <div className="h-max flex-1">
             {pathname !== "/auth/login" && <HeaderComp />}
-            <main className="p-6">
-              {children}
-            </main>
+            <ScrollShadow hideScrollBar className="h-[calc(90vh)]">
+              <main className="p-2 px-6">
+                {children}
+              </main>
+            </ScrollShadow>
           </div>
         </div>
       )}
