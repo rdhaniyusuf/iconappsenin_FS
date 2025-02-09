@@ -7,9 +7,7 @@ const menuItems = [
   { name: "Presence", icon: Calendar, href: "/presence" },
   { name: "Leaves", icon: Calendar, href: "/leave" },
   { name: "Schedules", icon: Calendar, href: "/schedule" },
-  { name: "Team Settings", icon: Users, href: "/team-setting" },
   { name: "Settings", icon: Settings, href: "/settings" },
-  { name: "System", icon: MonitorCog, href: "/system" },
   { name: "Help & Feedback", icon: HelpCircle, href: "/help" },
 ];
 

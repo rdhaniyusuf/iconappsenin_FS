@@ -1,6 +1,6 @@
 "use client";
 
-import { BottomTable, TopCardComp } from "@/components/dashboard/MainComp";
+import { BottomTable, TopCardComp, BottomActivity } from "@/components/dashboard/MainComp";
 
 export default function HomePage() {
 
@@ -22,7 +22,7 @@ export default function HomePage() {
 
         {/* Bottom Right Card */}
         <div className="bg-white col-span-4 shadow rounded p-4 min-w-[calc(100%-1rem)]">
-          {/* Task */}
+          <BottomActivity/>
         </div>
         {/* end of Bottom Right Card */}
       </section>
