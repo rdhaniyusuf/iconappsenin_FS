@@ -23,8 +23,6 @@ export default function HomePage() {
 
         {/* Bottom Right Card */}
         <div className="bg-white col-span-4 shadow rounded p-4 min-w-[calc(100%-1rem)]">
-        <TopModalComp/> 
-        <TopActivityComp/>
         </div>
         {/* Task */}
         {/* end of Bottom Right Card */}

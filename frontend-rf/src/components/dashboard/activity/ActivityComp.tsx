@@ -23,7 +23,7 @@ import {
   Button,
   useDisclosure,
 } from "@heroui/react";
-import {  ClockArrowDown } from "lucide-react";
+import { ClockArrowDown } from "lucide-react";
 import {
   Avatar,
   Card,
@@ -154,73 +154,75 @@ const TopActivityComp = () => {
     );
   };
 
-const statusColorMap: Record<string, ChipProps["color"]> = {
-  WFO: "success",
-  WFH: "danger",
-  SUBMISSION: "warning",
-};
+  const statusColorMap: Record<string, ChipProps["color"]> = {
+    WFO: "success",
+    WFH: "danger",
+    SUBMISSION: "warning",
+  };
 
   type user = (typeof usersDummy2)[0];
 
-  const renderCell = React.useCallback((user: user, columnKey: React.Key) => {
-    const cellValue = user[columnKey as keyof user];
+  const renderCell = React.useCallback(
+    (user: user, columnKey: React.Key) => {
+      const cellValue = user[columnKey as keyof user];
 
-    switch (columnKey) {
-      case "name":
-        return (
-          <User
-            avatarProps={{ radius: "lg", src: user.avatar }}
-            description={user.email}
-            name={cellValue}
-          >
-            {user.email}
-          </User>
-        );
-      case "role":
-        return (
-          <div className="flex flex-col">
-            <p className="text-bold text-sm capitalize">{cellValue}</p>
-            <p className="text-bold text-sm capitalize text-default-400">
-              {user.team}
-            </p>
-          </div>
-        );
-      case "status":
-        return (
-          <Chip
-            className="capitalize"
-            color={statusColorMap[user.status]}
-            size="sm"
-            variant="flat"
-          >
-            {cellValue}
-          </Chip>
-        );
-      case "actions":
-        return (
-          <div className="relative flex items-center gap-2">
-            <Tooltip content="Details">
-              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                <EyeIcon />
-              </span>
-            </Tooltip>
-            <Tooltip content="Edit user">
-              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                <EditIcon />
-              </span>
-            </Tooltip>
-            <Tooltip color="danger" content="Delete user">
-              <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                <DeleteIcon />
-              </span>
-            </Tooltip>
-          </div>
-        );
-      default:
-        return cellValue;
-    }
-  }, [statusColorMap]);
-  
+      switch (columnKey) {
+        case "name":
+          return (
+            <User
+              avatarProps={{ radius: "lg", src: user.avatar }}
+              description={user.email}
+              name={cellValue}
+            >
+              {user.email}
+            </User>
+          );
+        case "role":
+          return (
+            <div className="flex flex-col">
+              <p className="text-bold text-sm capitalize">{cellValue}</p>
+              <p className="text-bold text-sm capitalize text-default-400">
+                {user.team}
+              </p>
+            </div>
+          );
+        case "status":
+          return (
+            <Chip
+              className="capitalize"
+              color={statusColorMap[user.status]}
+              size="sm"
+              variant="flat"
+            >
+              {cellValue}
+            </Chip>
+          );
+        case "actions":
+          return (
+            <div className="relative flex items-center gap-2">
+              <Tooltip content="Details">
+                <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                  <EyeIcon />
+                </span>
+              </Tooltip>
+              <Tooltip content="Edit user">
+                <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                  <EditIcon />
+                </span>
+              </Tooltip>
+              <Tooltip color="danger" content="Delete user">
+                <span className="text-lg text-danger cursor-pointer active:opacity-50">
+                  <DeleteIcon />
+                </span>
+              </Tooltip>
+            </div>
+          );
+        default:
+          return cellValue;
+      }
+    },
+    [statusColorMap]
+  );
 
   return (
     <Table aria-label="Example table with custom cells">
@@ -250,156 +252,231 @@ const TopModalComp = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   return (
     <div className="flex mb-5 mt-5 justify-start flex-col gap-4">
-     <div className="flex-wrap flex gap-5">
-      <div className="flex gap-2">
-        <Button
-          endContent={<ClockArrowDown />}
-          className="flex max-w-fit bg-lamaSky"
-          onPress={onOpen}
+      <div className="flex-wrap flex gap-5">
+        <div className="flex gap-2">
+          <Button
+            endContent={<ClockArrowDown />}
+            className="flex max-w-fit bg-lamaSky"
+            onPress={onOpen}
+          >
+            Pending
+          </Button>
+        </div>
+        <Modal
+          isOpen={isOpen}
+          placement={"top-center"}
+          onOpenChange={onOpenChange}
         >
-          Pending
-        </Button>
-      </div>
-      <Modal
-        isOpen={isOpen}
-        placement={"top-center"}
-        onOpenChange={onOpenChange}
-      >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">
-                Permintaan Approval Absense
-              </ModalHeader>
-              <ModalBody>
-                <div className="w-full flex flex-row flex-wrap gap-4">
-                  {radius.map((r) => (
-                    <Input
-                      key={r}
-                      className="max-w-[220px]"
-                      defaultValue="junior@heroui.com"
-                      label="Email"
-                      placeholder="Enter your email"
-                      radius={"md"}
-                      type="email"
-                    />
-                  ))}
-                </div>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Close
-                </Button>
-                <Button color="primary" onPress={onClose}>
-                  Action
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
-      <div className="flex gap-2">
-        <Button
-          endContent={<ClockArrowDown />}
-          className="flex max-w-fit bg-LamaYellow"
-          onPress={onOpen}
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1">
+                  Permintaan Approval Absense
+                </ModalHeader>
+                <ModalBody>
+                  <div className="w-full flex flex-row flex-wrap gap-4">
+                    {radius.map((r) => (
+                      <Input
+                        key={r}
+                        className="max-w-[220px]"
+                        defaultValue="junior@heroui.com"
+                        label="Email"
+                        placeholder="Enter your email"
+                        radius={"md"}
+                        type="email"
+                      />
+                    ))}
+                  </div>
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="danger" variant="light" onPress={onClose}>
+                    Close
+                  </Button>
+                  <Button color="primary" onPress={onClose}>
+                    Action
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
+        <div className="flex gap-2">
+          <Button
+            endContent={<ClockArrowDown />}
+            className="flex max-w-fit bg-LamaYellow"
+            onPress={onOpen}
+          >
+            Lembur
+          </Button>
+        </div>
+        <Modal
+          isOpen={isOpen}
+          placement={"top-center"}
+          onOpenChange={onOpenChange}
         >
-          Lembur
-        </Button>
-      </div>
-      <Modal
-        isOpen={isOpen}
-        placement={"top-center"}
-        onOpenChange={onOpenChange}
-      >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">
-                Modal Title
-              </ModalHeader>
-              <ModalBody>
-                <div className="w-full flex flex-row flex-wrap gap-4">
-                  {radius.map((r) => (
-                    <Input
-                      key={r}
-                      className="max-w-[220px]"
-                      defaultValue="junior@heroui.com"
-                      label="Email"
-                      placeholder="Enter your email"
-                      radius={"md"}
-                      type="email"
-                    />
-                  ))}
-                </div>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Close
-                </Button>
-                <Button color="primary" onPress={onClose}>
-                  Action
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
-      <div className="flex gap-2 bg-lamaRedLight">
-        <Button
-          endContent={<ClockArrowDown />}
-          className="flex max-w-fit"
-          onPress={onOpen}
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1">
+                  Modal Title
+                </ModalHeader>
+                <ModalBody>
+                  <div className="w-full flex flex-row flex-wrap gap-4">
+                    {radius.map((r) => (
+                      <Input
+                        key={r}
+                        className="max-w-[220px]"
+                        defaultValue="junior@heroui.com"
+                        label="Email"
+                        placeholder="Enter your email"
+                        radius={"md"}
+                        type="email"
+                      />
+                    ))}
+                  </div>
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="danger" variant="light" onPress={onClose}>
+                    Close
+                  </Button>
+                  <Button color="primary" onPress={onClose}>
+                    Action
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
+        <div className="flex gap-2 bg-lamaRedLight">
+          <Button
+            endContent={<ClockArrowDown />}
+            className="flex max-w-fit"
+            onPress={onOpen}
+          >
+            Cuti
+          </Button>
+        </div>
+        <Modal
+          isOpen={isOpen}
+          placement={"top-center"}
+          onOpenChange={onOpenChange}
         >
-          Cuti
-        </Button>
-      </div>
-      <Modal
-        isOpen={isOpen}
-        placement={"top-center"}
-        onOpenChange={onOpenChange}
-      >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">
-                Modal Title
-              </ModalHeader>
-              <ModalBody>
-                <div className="w-full flex flex-row flex-wrap gap-4">
-                  {radius.map((r) => (
-                    <Input
-                      key={r}
-                      className="max-w-[220px]"
-                      defaultValue="junior@heroui.com"
-                      label="Email"
-                      placeholder="Enter your email"
-                      radius={"md"}
-                      type="email"
-                    />
-                  ))}
-                </div>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Close
-                </Button>
-                <Button color="primary" onPress={onClose}>
-                  Action
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1">
+                  Modal Title
+                </ModalHeader>
+                <ModalBody>
+                  <div className="w-full flex flex-row flex-wrap gap-4">
+                    {radius.map((r) => (
+                      <Input
+                        key={r}
+                        className="max-w-[220px]"
+                        defaultValue="junior@heroui.com"
+                        label="Email"
+                        placeholder="Enter your email"
+                        radius={"md"}
+                        type="email"
+                      />
+                    ))}
+                  </div>
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="danger" variant="light" onPress={onClose}>
+                    Close
+                  </Button>
+                  <Button color="primary" onPress={onClose}>
+                    Action
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
       </div>
     </div>
   );
 };
 
-const TopCutiComp = () => {
-  const [isFollowed, setIsFollowed] = React.useState(false);
-  
-}
+const TopCutiPop = ({}) => {
+  const UserTwitterCard = () => {
+    const [isFollowed, setIsFollowed] = React.useState(false);
+    return (
+      <Card className="max-w-[300px] border-none bg-transparent" shadow="none">
+        <CardHeader className="justify-between">
+          <div className="flex gap-3">
+            <Avatar
+              isBordered
+              radius="full"
+              size="md"
+              src="https://i.pravatar.cc/150?u=a04258114e29026702d"
+            />
+            <div className="flex flex-col items-start justify-center">
+              <h4 className="text-small font-semibold leading-none text-default-600">
+                Zoey Lang
+              </h4>
+              <h5 className="text-small tracking-tight text-default-500">
+                @zoeylang
+              </h5>
+            </div>
+          </div>
+          <Button
+            className={
+              isFollowed
+                ? "bg-transparent text-foreground border-default-200"
+                : ""
+            }
+            color="primary"
+            radius="full"
+            size="sm"
+            variant={isFollowed ? "bordered" : "solid"}
+            onPress={() => setIsFollowed(!isFollowed)}
+          >
+            {isFollowed ? "Unfollow" : "Follow"}
+          </Button>
+        </CardHeader>
+        <CardBody className="px-3 py-0">
+          <p className="text-small pl-px text-default-500">
+            Full-stack developer, @hero_ui lover she/her
+            <span aria-label="confetti" role="img">
+              🎉
+            </span>
+          </p>
+        </CardBody>
+        <CardFooter className="gap-3">
+          <div className="flex gap-1">
+            <p className="font-semibold text-default-600 text-small">4</p>
+            <p className=" text-default-500 text-small">Following</p>
+          </div>
+          <div className="flex gap-1">
+            <p className="font-semibold text-default-600 text-small">97.1K</p>
+            <p className="text-default-500 text-small">Followers</p>
+          </div>
+        </CardFooter>
+      </Card>
+    );
+  };
+  const App = () => {
+    return (
+      <Popover showArrow placement="bottom">
+        <PopoverTrigger>
+          <User
+            as="button"
+            avatarProps={{
+              src: "https://i.pravatar.cc/150?u=a04258114e29026702d",
+            }}
+            className="transition-transform"
+            description="Product Designer"
+            name="Zoe Lang"
+          />
+        </PopoverTrigger>
+        <PopoverContent className="p-1">
+          <UserTwitterCard />
+        </PopoverContent>
+      </Popover>
+    );
+  };
+};
 
-export { TopActivityComp, TopModalComp };
+export { TopActivityComp, TopModalComp, TopCutiPop };
