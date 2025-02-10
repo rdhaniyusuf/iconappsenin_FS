@@ -11,6 +11,12 @@ export default {
   theme: {
     extend: {
       colors: {
+        lamaSky: "#C3EBFA",
+        lamaSkyLight: "#EDF9FD",
+        LamaPurple: "#CFCFFF",
+        LamaPurpleLight: "#F1F0FF",
+        LamaYellow: "#FAE27C",
+        LamaYellowLight: "#FEFCEB",
         background: "var(--background)",
         foreground: "var(--foreground)",
       },

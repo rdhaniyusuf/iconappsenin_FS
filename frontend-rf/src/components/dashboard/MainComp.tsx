@@ -31,7 +31,6 @@ import {
 } from "@/utils/Helpers";
 import { SearchIcon, ChevronDownIcon, PlusIcon, Ellipsis } from "lucide-react";
 import React, { SVGProps, useState } from "react";
-import { div, p } from "framer-motion/client";
 
 const TopCardComp = () => {
   return (
@@ -147,7 +146,7 @@ const BottomTable = () => {
     }
 
     return filteredUsers;
-  }, [usersDummy, filterValue, statusFilter]);
+  }, [usersDummy, filterValue, statusFilter, hasSearchFilter]);
 
   const items = React.useMemo(() => {
     const start = (page - 1) * rowsPerPage;
@@ -395,7 +394,8 @@ const BottomTable = () => {
       bottomContentPlacement="outside"
       checkboxesProps={{
         classNames: {
-          wrapper: "after:bg-foreground after:text-background text-background",
+          wrapper:
+            "flex-col relative box-sizing:border-box overflow: hidden display: inline-block after:bg-foreground after:text-background text-background",
         },
       }}
       classNames={classNames}

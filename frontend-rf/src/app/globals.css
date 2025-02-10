@@ -19,15 +19,3 @@ body {
   background: var(--background);
   font-family: "Nunito", "Inter";
 }
-
-img{
-  width: 100%;
-  height: auto;
-  transition: .3s ease all;
-  -webkit-animation: .3s ease all;
-  -webkit-transition: .3s ease all;
-  -moz-transition: .3s ease all;
-}
-img:hover{
-  scale: 105%;
-}
