@@ -33,6 +33,7 @@ backend/services/__pycache__/*
 backend/services/__pycache__/*
 *__pycache__/*
 *.pyc
+/*/*/__pycache__/
 
 # Frontend
 frontend/node_modules/
