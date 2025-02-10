@@ -10,9 +10,9 @@ class AuthService:
         return await bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt(rounds=15, prefix=b"2b")).decode('utf-8')
 
     @staticmethod
-    async def check_password(pass_in: str, pass_out: str) -> bool:
+    def check_password(pass_in: str, pass_out: str) -> bool:
         bcrypt.gensalt(rounds=15, prefix=b"2b")
-        return await bcrypt.checkpw(pass_in.encode('utf-8'), pass_out.encode('utf-8'))
+        return bcrypt.checkpw(pass_in.encode('utf-8'), pass_out.encode('utf-8'))
 
     @staticmethod
     async def generate_jwt(user: Any) -> str:

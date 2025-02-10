@@ -17,19 +17,19 @@ async def get_user_service(db: AsyncSession):
 
 async def login_user_service(db: AsyncSession, user_name: str, user_pass: str):
     result = await db.execute(select(User).filter(User.user_name == user_name))
-    user = result.scalars().first()
-
+    user = result.scalars().one()
     if not user:
         return None  # Jika user tidak ditemukan
 
-    if not AuthService.check_password(user_pass, user.user_pass):  
-        return None  # Jika password salah
+    check_pass = AuthService.check_password(user_pass, user.user_pass)
+    if user and check_pass: 
+        return {
+            "user_id": user.user_id,
+            "user_name": user.user_name,
+            "user_fullname": user.user_fullname,
+            "user_email": user.user_email,
+            "is_active": user.is_active
+        }
+    return None  # Jika password salah
 
-    return {
-        "user_id": user.user_id,
-        "user_name": user.user_name,
-        "user_fullname": user.user_fullname,
-        "user_email": user.user_email,
-        "is_active": user.is_active
-    }
 
