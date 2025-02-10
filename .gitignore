@@ -26,6 +26,8 @@ Thumbs.db
 backend/.env
 backend/_env/
 backend/_venv/
+backend/*/__pycache__/
+backend/*/*/*/__pycache__/
 
 # Frontend
 frontend/node_modules/

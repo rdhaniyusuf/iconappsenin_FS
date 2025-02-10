@@ -22,3 +22,7 @@ SQLAlchemy
 Flask-SQLAlchemy
 Werkzeug
 "fastapi[standard]"
+psycopg2-binary
+asyncpg
+alembic
+pydantic-settings
