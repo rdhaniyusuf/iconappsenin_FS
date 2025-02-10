@@ -27,3 +27,25 @@ def connect_db():
     except Exception as error:
         print(f"Error connecting to database: {error}")
         return None
+    
+def close_db(connection):
+    connection.close()
+    print("Database connection closed")
+    
+def query_db(connection, query, data=None):
+    cursor = connection.cursor()
+    try:
+        if data is None:
+            cursor.execute(query)
+        else:
+            cursor.execute(query, data)
+        connection.commit()
+        return cursor
+    except Exception as error:
+        print(f"Error querying database: {error}")
+        return None
+    finally:
+        cursor.close()
+
+def fetch_all(cursor):
+    return cursor.fetchall()

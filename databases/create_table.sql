@@ -1,10 +1,13 @@
--- Active: 1738430153803@@127.0.0.1@5432@appsenindb
+-- Active: 1739156989671@@127.0.0.1@5432@appsenindb
+
 CREATE TABLE at_sys_msuser (
     user_id SERIAL PRIMARY KEY,
     user_name VARCHAR(50) NOT NULL UNIQUE,
     user_fullname VARCHAR(100) NOT NULL,
     user_pass VARCHAR(255) NOT NULL,
     user_email VARCHAR(100) NOT NULL UNIQUE,
+    user_number VARCHAR(20) NOT NULL UNIQUE,
+    user_image BYTEA,
     created_by INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     modified_by INT NOT NULL,
@@ -12,6 +15,41 @@ CREATE TABLE at_sys_msuser (
     is_active BOOLEAN
 );
 
+
+CREATE TABLE at_sys_msposition(
+    position_id SERIAL PRIMARY KEY,
+    position_name VARCHAR(50) NOT NULL UNIQUE,
+    created_by INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    modified_by INT NOT NULL,
+    modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_active BOOLEAN
+);
+
+CREATE TABLE at_sys_msdepartment (
+    department_id SERIAL PRIMARY KEY,
+    department_name VARCHAR(50) NOT NULL UNIQUE,
+    created_by INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    modified_by INT NOT NULL,
+    modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_active BOOLEAN
+);
+
+Create Table at_sys_msuserdepartment (
+    userdepartment_id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
+    position_id INT NOT NULL,
+    department_id INT NOT NULL,
+    created_by INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    modified_by INT NOT NULL,
+    modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES at_sys_msuser(user_id),
+    FOREIGN KEY (department_id) REFERENCES at_sys_msdepartment(department_id),
+    Foreign Key (position_id) REFERENCES at_sys_msposition(position_id),
+    is_active BOOLEAN
+);
 
 CREATE TABLE at_sys_msrole (
     role_id SERIAL PRIMARY KEY,
