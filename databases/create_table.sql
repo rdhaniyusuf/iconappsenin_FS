@@ -1,5 +1,3 @@
--- Active: 1739156989671@@127.0.0.1@5432@appsenindb
-
 CREATE TABLE at_sys_msuser (
     user_id SERIAL PRIMARY KEY,
     user_name VARCHAR(50) NOT NULL UNIQUE,

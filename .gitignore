@@ -26,8 +26,13 @@ Thumbs.db
 backend/.env
 backend/_env/
 backend/_venv/
-backend/*/__pycache__/
+backend/__pycache__/
 backend/*/*/*/__pycache__/
+backend/api/v1/__pycache__/*
+backend/services/__pycache__/*
+backend/services/__pycache__/*
+*__pycache__/*
+*.pyc
 
 # Frontend
 frontend/node_modules/
@@ -36,6 +41,10 @@ frontend/package-lock.json
 frontend/.next/
 
 backend/*/*/__pycache__/
+backend/*/__pycache__/
+backend/*__pycache__/
+*__pycache__/
+__pycache__/
 
 frontend-rf/node_modules/
 frontend-rf/node_modules/

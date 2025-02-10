@@ -4,15 +4,15 @@ from sqlalchemy.orm import sessionmaker
 from core.config import settings
 
 # Inisialisasi engine untuk async mode
-engine = create_async_engine(settings.DATABASE_URL, echo=True)
-
-# Session factory untuk membuat sesi database
-SessionLocal = sessionmaker(
-    autocommit=False, autoflush=False, bind=engine, class_=AsyncSession
-)
+engine = create_async_engine(settings.DATABASE_URL, echo=True, future=True)
 
 # Base class untuk model SQLAlchemy
 Base = declarative_base()
+
+# Session factory untuk membuat sesi database
+SessionLocal = sessionmaker(
+    bind=engine, class_=AsyncSession, expire_on_commit=False
+)
 
 # Dependency untuk mendapatkan session database
 async def get_db():
