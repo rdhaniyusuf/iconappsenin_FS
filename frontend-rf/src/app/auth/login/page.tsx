@@ -15,31 +15,37 @@ export default function LoginPage() {
   const [showAlert, setShowAlert] = React.useState(false);
   const [showFailed, setShowFailed] = React.useState(false);
   const pathname = usePathname();
+  const [message, setMessage] = React.useState("");
 
   const handleSubmit = async (username: string, password: string) => {
-    const success = await loginUser(username, password);
+    const result = await loginUser(username, password);
 
-    if (success) {
+    if (result.success) {
+      console.log("Welcome", username);
       router.push("/");
-      console.log('Welcome', username)
     } else {
-      console.log('Authentication failed');
+      console.log("Authentication failed:", result.message);
+      setMessage(result.message || "");
       setShowFailed(true);
     }
   };
 
   React.useEffect(() => {
     setLoading(true);
+
     const checkAuth = () => {
-      if (isAuthenticated() && pathname === "/auth/login") {
-        console.log(isAuthenticated())
-        setShowAlert(true);
+      if (isAuthenticated()) {
+        if (pathname === "/auth/login") {
+          setShowAlert(true);
+        }
       }
       setLoading(false);
-    }
+    };
+
     const timer = setTimeout(checkAuth, 1000);
     return () => clearTimeout(timer);
   }, [pathname]);
+
 
   return (
     <>
@@ -68,16 +74,16 @@ export default function LoginPage() {
       )
       }
       {!loading && !showAlert && (
-        loginForm(handleSubmit, showFailed, setShowFailed)
+        loginForm(handleSubmit, showFailed, setShowFailed,message)
       )}
     </>
   )
 }
 
-const loginForm = (handleSubmit: any, showFailed: boolean, setShowFailed: React.Dispatch<React.SetStateAction<boolean>>) => {
+const loginForm = (handleSubmit: any, showFailed: boolean, setShowFailed: React.Dispatch<React.SetStateAction<boolean>>, message:string) => {
   return (
     <>
-      <AlertLogin showFailed={showFailed} setShowFailed={setShowFailed} />
+      <AlertLogin showFailed={showFailed} setShowFailed={setShowFailed} message={message} />
       <div className="grid 
     min-h-screen
     p-5
@@ -116,20 +122,20 @@ const loginForm = (handleSubmit: any, showFailed: boolean, setShowFailed: React.
   )
 }
 
-const AlertLogin: React.FC<{ showFailed: boolean, setShowFailed: React.Dispatch<React.SetStateAction<boolean>> }> = ({ showFailed, setShowFailed }) => {
+const AlertLogin: React.FC<{ showFailed: boolean, setShowFailed: React.Dispatch<React.SetStateAction<boolean>>, message:string }> = ({ showFailed, setShowFailed, message}) => {
   return (
     <motion.div
       key={"div"}
-      initial={{ opacity: 0 , scale: 0}}
-      animate={{ opacity: 1 ,scale: 1}}
-      exit={{ opacity: 0,scale: 0}}
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0 }}
       className="z-10 absolute top-10 left-1/2 transform -translate-x-1/2 flex flex-col gap-4 max-w-max p-4 mx-auto">
       {showFailed ? (
         <Alert
           color="warning"
-          description="Failed to login, please try again."
+          description={message+ ", Please try again."} 
           isVisible={showFailed}
-          title="Failed to login"
+          title={"Failed to login"}
           variant="faded"
           onClose={() => setShowFailed(false)}
         />

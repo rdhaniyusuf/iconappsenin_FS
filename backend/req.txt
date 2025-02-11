@@ -10,6 +10,8 @@ bcrypt
 numpy
 pandas
 jwt
+pyjwt
+python-jose
 requests
 jupyterlab
 notebook

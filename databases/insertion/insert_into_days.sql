@@ -1,4 +1,4 @@
--- Active: 1739156989671@@127.0.0.1@5432@appsenindb
+-- Active: 1739191634895@@127.0.0.1@5432@appsenindb
 INSERT INTO at_sys_msdays (days_name, created_by, modified_by, is_active)
     VALUES ('Senin', 1, 1, TRUE),
         ('Selasa', 1, 1, TRUE),
@@ -24,8 +24,8 @@ INSERT INTO at_sys_msdepartment (department_name, created_by, modified_by, is_ac
 --set foreign key
 
 INSERT INTO at_sys_msuserdepartment (user_id, position_id, department_id, created_by, modified_by, is_active)
-    VALUES (2, 1, 1, 1, 1, TRUE);
+    VALUES (1, 1, 1, 1, 1, TRUE);
 
 insert into at_sys_msuserrole (user_id, role_id, created_by, modified_by, is_active)
-    values (2, 1, 2, 2, TRUE);
+    values (1, 1, 2, 2, TRUE);
 
