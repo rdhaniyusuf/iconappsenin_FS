@@ -21,7 +21,7 @@ export default function HomePage() {
         {/* end of Bottom Left Card */}
 
         {/* Bottom Right Card */}
-        <div className="bg-white col-span-4 shadow rounded p-4 min-w-[calc(100%-1rem)]">
+        <div className="bg-white col-span-4 shadow rounded p-3 min-w-[calc(100%-1rem)]">
           <BottomActivity/>
         </div>
         {/* end of Bottom Right Card */}

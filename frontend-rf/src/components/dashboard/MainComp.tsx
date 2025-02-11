@@ -28,10 +28,12 @@ import {
     SortDescriptor,
 } from "@heroui/react";
 import { topCardList, tableColumns, usersDummy, statusOptions } from "@/utils/Helpers";
-import { SearchIcon, ChevronDownIcon, PlusIcon, Ellipsis } from "lucide-react";
+import { SearchIcon, ChevronDownIcon, PlusIcon, Ellipsis, Signature } from "lucide-react";
 import React, { SVGProps } from "react";
 import { p } from "framer-motion/client";
 import { on } from "events";
+
+
 
 const TopCardComp = () => {
     return (
@@ -380,7 +382,6 @@ const BottomTable = () => {
     );
 }
 
-
 const BottomActivity = () => {
     const [selected, setSelected] = React.useState("absence");
 
@@ -394,6 +395,7 @@ const BottomActivity = () => {
                     </Chip>
                 </div>}>
                 {/* Table yang belum absen */}
+                <TableAbsensi />
                 {/* action send message */}
             </Tab>
             <Tab key="cuti" title={<div className="flex items-center space-x-2">
@@ -403,6 +405,7 @@ const BottomActivity = () => {
                 </Chip>
             </div>}>
                {/* Table yang request cuti */}
+               <TableCuti />   
                {/* action approval and review */}
             </Tab>
             <Tab key="lembur" title={<div className="flex items-center space-x-2">
@@ -412,11 +415,282 @@ const BottomActivity = () => {
                 </Chip>
             </div>}>
                 {/* Table yang request lembur*/}
+                <TableLembur />
                 {/* action approval and review */}
             </Tab>
         </Tabs>
     );
 }
+
+
+const TableAbsensi = () => {
+    const [filterValue, setFilterValue] = React.useState("");
+    const [selectedKeys, setSelectedKeys] = React.useState<Selection>(new Set([]));
+    const [statusFilter, setStatusFilter] = React.useState<Selection>("all");
+    const [rowsPerPage, setRowsPerPage] = React.useState(15);
+    const INITIAL_VISIBLE_COLUMNS_ABSEN = ["name", "status", "actions"];
+    const [visibleColumns, setVisibleColumns] = React.useState<Selection>(
+        new Set(INITIAL_VISIBLE_COLUMNS_ABSEN),
+    );
+    const [sortDescriptor, setSortDescriptor] = React.useState<SortDescriptor>({
+        column: "clockIn",
+        direction: "ascending",
+    });
+    const [page, setPage] = React.useState(1);
+
+    const pages = Math.ceil(usersDummy.length / rowsPerPage);
+
+    const hasSearchFilter = Boolean(filterValue);
+
+    const headerColumns = React.useMemo(() => {
+        if (visibleColumns === "all") return tableColumns.map(column => ({ ...column, sortable: false }));
+
+        return tableColumns
+            .filter((tableColumns) => Array.from(visibleColumns).includes(tableColumns.uid))
+            .map(column => ({ ...column, sortable: false }));
+    }, [visibleColumns]);
+
+    const filteredItems = React.useMemo(() => {
+        let filteredUsers = [...usersDummy];
+
+        if (hasSearchFilter) {
+            filteredUsers = filteredUsers.filter((user) =>
+                user.name.toLowerCase().includes(filterValue.toLowerCase()),
+            );
+        }
+        if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
+            filteredUsers = filteredUsers.filter((user) =>
+                Array.from(statusFilter).includes(user.status),
+            );
+        }
+
+        return filteredUsers;
+    }, [usersDummy, filterValue, statusFilter]);
+
+    const items = React.useMemo(() => {
+        const start = (page - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+
+        return filteredItems.slice(start, end);
+    }, [page, filteredItems, rowsPerPage]);
+
+    const sortedItems = React.useMemo(() => {
+        return [...items].sort((a: user, b: user) => {
+            const first = a[sortDescriptor.column as keyof user] as number;
+            const second = b[sortDescriptor.column as keyof user] as number;
+            const cmp = first < second ? -1 : first > second ? 1 : 0;
+
+            return sortDescriptor.direction === "descending" ? -cmp : cmp;
+        });
+    }, [sortDescriptor, items]);
+
+    const renderCell = React.useCallback((user: user, columnKey: React.Key) => {
+        const cellValue = user[columnKey as keyof user];
+
+        switch (columnKey) {
+            case "name":
+                return (
+                    <>{cellValue}</>
+                );
+            case "status":
+                return (
+                    <Chip
+                        className="capitalize border-none gap-1 text-default-600"
+                        color={statusColorMap[user.status]}
+                        size="sm"
+                        variant="dot"
+                    >
+                        {cellValue}
+                    </Chip>
+                );
+            case "actions":
+                return (
+                    <div className="relative flex justify-end items-center gap-2">
+                        <Signature className="text-default-400" />
+                    </div>
+                );
+            default:
+                return cellValue;
+        }
+    }, []);
+
+    const onRowsPerPageChange = React.useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+        setRowsPerPage(Number(e.target.value));
+        setPage(1);
+    }, []);
+
+    const onSearchChange = React.useCallback((value?: string) => {
+        if (value) {
+            setFilterValue(value);
+            setPage(1);
+        } else {
+            setFilterValue("");
+        }
+    }, []);
+
+    const topContent = React.useMemo(() => {
+        return (
+            <div className="flex flex-col gap-4">
+                <div className="flex justify-between gap-3 items-end">
+                    <Input
+                        isClearable
+                        classNames={{
+                            base: "w-full sm:max-w-[44%]",
+                            inputWrapper: "border-1",
+                        }}
+                        placeholder="Search by name..."
+                        size="sm"
+                        startContent={<SearchIcon className="text-default-300" />}
+                        value={filterValue}
+                        variant="bordered"
+                        onClear={() => setFilterValue("")}
+                        onValueChange={onSearchChange}
+                    />
+                    <div className="flex gap-3">
+                        {/* <Dropdown>
+                            <DropdownTrigger className="hidden sm:flex">
+                                <Button
+                                    endContent={<ChevronDownIcon className="text-small" />}
+                                    size="sm"
+                                    variant="flat"
+                                >
+                                    Status
+                                </Button>
+                            </DropdownTrigger>
+                            <DropdownMenu
+                                disallowEmptySelection
+                                aria-label="Table Columns"
+                                closeOnSelect={false}
+                                selectedKeys={statusFilter}
+                                selectionMode="multiple"
+                                onSelectionChange={setStatusFilter}
+                            >
+                                {statusOptions.map((status) => (
+                                    <DropdownItem key={status.uid} className="capitalize">
+                                        {capitalize(status.name)}
+                                    </DropdownItem>
+                                ))}
+                            </DropdownMenu>
+                        </Dropdown> */}
+                    </div>
+                </div>
+                <div className="flex justify-between items-center">
+                    <span className="text-default-400 text-small">Total {usersDummy.length} users</span>
+                    <label className="flex items-center text-default-400 text-small">
+                        Rows per page:
+                        <select
+                            className="bg-transparent outline-none text-default-400 text-small"
+                            onChange={onRowsPerPageChange}
+                        >
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+        );
+    }, [
+        filterValue,
+        statusFilter,
+        visibleColumns,
+        onSearchChange,
+        onRowsPerPageChange,
+        usersDummy.length,
+        hasSearchFilter,
+    ]);
+
+    const bottomContent = React.useMemo(() => {
+        return (
+            <div className="mt-2 py-2 px-2 flex justify-between items-center">
+                <Pagination
+                    showControls
+                    classNames={{
+                        cursor: "bg-foreground text-background",
+                    }}
+                    color="default"
+                    isDisabled={hasSearchFilter}
+                    page={page}
+                    total={pages}
+                    variant="light"
+                    onChange={setPage}
+                />
+                <span className="text-small text-default-400">
+                    {selectedKeys === "all"
+                        ? "All items selected"
+                        : `${selectedKeys.size} of ${items.length} selected`}
+                </span>
+            </div>
+        );
+    }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
+
+    const classNames = React.useMemo(
+        () => ({
+            wrapper: ["max-h-[382px]", "max-w-3xl"],
+            th: ["bg-transparent", "text-default-500", "border-b", "border-divider"],
+            td: [
+                "group-data-[first=true]/tr:first:before:rounded-none",
+                "group-data-[first=true]/tr:last:before:rounded-none",
+                "group-data-[middle=true]/tr:before:rounded-none",
+                "group-data-[last=true]/tr:first:before:rounded-none",
+                "group-data-[last=true]/tr:last:before:rounded-none",
+            ],
+        }),
+        [],
+    );
+
+    return (
+        <Table
+            isCompact
+            removeWrapper
+            aria-label="Example table with custom cells, pagination and sorting"
+            bottomContent={bottomContent}
+            bottomContentPlacement="outside"
+            checkboxesProps={{
+                classNames: {
+                    wrapper: "after:bg-foreground after:text-background text-background",
+                },
+            }}
+            classNames={classNames}
+            selectedKeys={selectedKeys}
+            selectionMode="multiple"
+            sortDescriptor={sortDescriptor}
+            topContent={topContent}
+            topContentPlacement="outside"
+            onSelectionChange={setSelectedKeys}
+            onSortChange={setSortDescriptor}
+        >
+            <TableHeader columns={headerColumns}>
+                {(column) => (
+                    <TableColumn
+                        key={column.uid}
+                        align={column.uid === "actions" ? "center" : "start"}
+                        allowsSorting={column.sortable}
+                    >
+                        {column.name}
+                    </TableColumn>
+                )}
+            </TableHeader>
+            <TableBody emptyContent={"No users found"} items={sortedItems}>
+                {(item) => (
+                    <TableRow key={item.nip}>
+                        {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+                    </TableRow>
+                )}
+            </TableBody>
+        </Table>
+    );
+}
+
+const TableCuti = () => {
+    return(<>Cuti aja, jangan sungkan</>);
+}
+
+const TableLembur = () => {
+    return(<>Lembur mulu, jamnya kepangkas!</>);
+}
+
+
 
 
 
