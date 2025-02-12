@@ -760,7 +760,7 @@ const TableAbsensi = () => {
 };
 
 const TableCuti = () => {
-  const EditIcon = () => {
+  const ApprovalIcon = () => {
     return (
       <Button
         className="border-none"
@@ -776,7 +776,7 @@ const TableCuti = () => {
   type user = (typeof usersDummy2)[0];
   const classNames = React.useMemo(
     () => ({
-      wrapper: ["max-h-content", "max-w-3xl"],
+      wrapper: ["max-h-content", "max-w-content"],
       th: ["bg-transparent", "text-default-500", "border-b", "border-divider"],
       td: [
         "group-data-[first=true]/tr:first:before:rounded-none",
@@ -818,9 +818,9 @@ const TableCuti = () => {
       case "actions":
         return (
           <div className="flex-col flex justify-center">
-            <Tooltip content="Edit User">
+            <Tooltip content="Approval">
               <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                <EditIcon />
+                <ApprovalIcon />
               </span>
             </Tooltip>
           </div>

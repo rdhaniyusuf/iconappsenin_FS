@@ -12,6 +12,8 @@ import {
   Tooltip,
   ChipProps,
   Input,
+  Tabs,
+  Tab,
 } from "@heroui/react";
 import { columnAct, usersDummy2 } from "@/utils/Helpers";
 import {
@@ -41,7 +43,64 @@ import {
 } from "@heroui/react";
 
 const radius = ["full", "lg", "md", "sm", "none"];
+const TopActivityTabs = () => {
+   const [selected, setSelected] = React.useState("absence");
 
+   return (
+     <Tabs
+       className="flex items-center justify-start"
+       aria-label="Options"
+       selectedKey={selected}
+       onSelectionChange={(key) => setSelected(key as string)}
+     >
+       <Tab
+         key="absensi"
+         title={
+           <div className="flex items-center space-x-2">
+             <span>Absensi</span>
+             <Chip size="sm" variant="solid" color="danger">
+               1
+             </Chip>
+           </div>
+         }
+       >
+         {/* Table yang belum absen */}
+         <TopActivityComp/>
+         {/* action send message */}
+       </Tab>
+       <Tab
+         key="cuti"
+         title={
+           <div className="flex items-center space-x-2">
+             <span>Cuti</span>
+             <Chip size="sm" variant="solid" color="warning">
+               1
+             </Chip>
+           </div>
+         }
+       >
+         {/* Table yang request cuti */}
+         {/* TABS UNTUK LEMBUR IN PAGE ACTIVITY */}
+         {/* action approval and review */}
+       </Tab>
+       <Tab
+         key="lembur"
+         title={
+           <div className="flex items-center space-x-2">
+             <span>Lembur</span>
+             <Chip size="sm" variant="solid" color="secondary">
+               1
+             </Chip>
+           </div>
+         }
+       >
+         {/* Table yang request lembur*/}
+         {/* <TableLembur /> */}
+         {/* action approval and review */}
+       </Tab>
+     </Tabs>
+   );
+};
 const TopActivityComp = () => {
   const RefreshIcon = () => {
     return (
@@ -69,9 +128,7 @@ const TopActivityComp = () => {
       </Button>
     );
   };
-
   type user = (typeof usersDummy2)[0];
-
   const renderCell = React.useCallback((user: user, columnKey: React.Key) => {
     const cellValue = user[columnKey as keyof user];
     const statusColorMap: Record<string, ChipProps["color"]> = {
@@ -110,7 +167,7 @@ const TopActivityComp = () => {
         );
       case "actions":
         return (
-          <div className="flex-wrap flex justify-center gap-[-10]">
+          <div className="flex justify-center gap-[-10]">
             <Tooltip content="Refresh">
               <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
                 <RefreshIcon />
@@ -127,7 +184,6 @@ const TopActivityComp = () => {
         return cellValue;
     }
   }, []);
-
   return (
     <Table aria-label="Example table with custom cells">
       <TableHeader columns={columnAct}>
@@ -302,7 +358,6 @@ const TopModalComp = () => {
     </div>
   );
 };
-
 const TopCutiPop = ({}) => {
   const UserTwitterCard = () => {
     const [isFollowed, setIsFollowed] = React.useState(false);
@@ -382,5 +437,4 @@ const TopCutiPop = ({}) => {
     );
   };
 };
-
-export { TopActivityComp, TopModalComp, TopCutiPop };
+export { TopActivityComp, TopModalComp, TopCutiPop, TopActivityTabs };
