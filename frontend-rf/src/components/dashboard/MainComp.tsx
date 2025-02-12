@@ -628,31 +628,6 @@ const TableAbsensi = () => {
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
-            {/* <Dropdown>
-                            <DropdownTrigger className="hidden sm:flex">
-                                <Button
-                                    endContent={<ChevronDownIcon className="text-small" />}
-                                    size="sm"
-                                    variant="flat"
-                                >
-                                    Status
-                                </Button>
-                            </DropdownTrigger>
-                            <DropdownMenu
-                                disallowEmptySelection
-                                aria-label="Table Columns"
-                                closeOnSelect={false}
-                                selectedKeys={statusFilter}
-                                selectionMode="multiple"
-                                onSelectionChange={setStatusFilter}
-                            >
-                                {statusOptions.map((status) => (
-                                    <DropdownItem key={status.uid} className="capitalize">
-                                        {capitalize(status.name)}
-                                    </DropdownItem>
-                                ))}
-                            </DropdownMenu>
-                        </Dropdown> */}
             <div className="flex-wrap justify-between items-center">
               <span className="text-default-400 text-small">
                 {/* Total {use?.length} users */}
