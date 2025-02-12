@@ -5,6 +5,12 @@
 :root {
   --background: #f8f8f8;
   --foreground: #0e0e0e;
+  --lamaSky: "#C3EBFA",
+  --lamaSkyLight: "#EDF9FD",
+  --LamaPurple: "#CFCFFF",
+  --LamaPurpleLight: "#F1F0FF",
+  --LamaYellow: "#FAE27C",
+  --LamaYellowLight: "#FEFCEB",
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -15,7 +21,7 @@
 } */
 
 body {
-  color: var(--foreground);
+  color: var(--lamaSky);
   background: var(--background);
   font-family: "Nunito", "Inter";
 }

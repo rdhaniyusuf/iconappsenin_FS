@@ -1,4 +1,17 @@
-import { Home, Activity, BarChart, Calendar, Settings, HelpCircle, Users, MonitorCog, Clock8,CalendarCheck2,Coffee, Building2 } from 'lucide-react';
+import {
+  Home,
+  Activity,
+  BarChart,
+  Calendar,
+  Settings,
+  HelpCircle,
+  Users,
+  MonitorCog,
+  Clock8,
+  CalendarCheck2,
+  Coffee,
+  Building2,
+} from "lucide-react";
 
 const menuItems = [
   { name: "Dashboard", icon: Home, href: "/" },
@@ -27,7 +40,6 @@ const topCardList = [
     count: "2",
     color: "warning",
     icon: CalendarCheck2,
-
   },
   {
     title: "Work From Anywhere",
@@ -41,26 +53,27 @@ const topCardList = [
     img: "/images/fruit-3.jpeg",
     count: "24",
     color: "success",
-    icon:Building2 ,
+    icon: Building2,
   },
 ];
 
 const tableColumns = [
-  {name: "NIP", uid: "nip", sortable: true},
-  {name: "NAME", uid: "name", sortable: true},
-  {name: "ROLE", uid: "role", sortable: true},
-  {name: "TEAM", uid: "team"},
-  {name: "EMAIL", uid: "email"},
-  {name: "CLOCK IN", uid: "clockIn", sortable: true},
-  {name: "CLOCK OUT", uid: "clockOut", sortable: true},
-  {name: "STATUS", uid: "status", sortable: true},
-  {name: "ACTIONS", uid: "actions"},
+  { name: "NIP", uid: "nip", sortable: true },
+  { name: "NAME", uid: "name", sortable: true },
+  { name: "ROLE", uid: "role", sortable: true },
+  { name: "TEAM", uid: "team" },
+  { name: "EMAIL", uid: "email" },
+  { name: "CLOCK IN", uid: "clockIn", sortable: true },
+  { name: "CLOCK OUT", uid: "clockOut", sortable: true },
+  { name: "STATUS", uid: "status", sortable: true },
+  { name: "ACTIONS", uid: "actions" },
+  { name: "DATE", uid: "date" },
 ];
 
 const statusOptions = [
-  {name: "WFO", uid: "wfo"},
-  {name: "WFA", uid: "wfa"},
-  {name: "Submission", uid: "submission"},
+  { name: "WFO", uid: "wfo" },
+  { name: "WFA", uid: "wfa" },
+  { name: "Submission", uid: "submission" },
 ];
 
 const usersDummy = [
@@ -82,7 +95,7 @@ const usersDummy = [
     status: "wfa",
     clockIn: "08:00",
     clockOut: "17:00",
-    
+
     email: "zoey.lang@example.com",
   },
   {
@@ -93,7 +106,7 @@ const usersDummy = [
     status: "wfo",
     clockIn: "08:00",
     clockOut: "17:00",
-    
+
     email: "jane.fisher@example.com",
   },
   {
@@ -104,7 +117,7 @@ const usersDummy = [
     status: "submission",
     clockIn: "08:00",
     clockOut: "17:00",
-    
+
     email: "william.howard@example.com",
   },
   {
@@ -115,7 +128,7 @@ const usersDummy = [
     status: "wfo",
     clockIn: "08:00",
     clockOut: "17:00",
-    
+
     email: "kristen.cooper@example.com",
   },
   {
@@ -125,7 +138,7 @@ const usersDummy = [
     team: "Management",
     clockIn: "08:00",
     clockOut: "17:00",
-    
+
     email: "brian.kim@example.com",
     status: "wfo",
   },
@@ -137,7 +150,7 @@ const usersDummy = [
     status: "wfa",
     clockIn: "08:00",
     clockOut: "17:00",
-    
+
     email: "michael.hunt@example.com",
   },
   {
@@ -148,7 +161,7 @@ const usersDummy = [
     status: "wfo",
     clockIn: "08:00",
     clockOut: "17:00",
-    
+
     email: "samantha.brooks@example.com",
   },
   {
@@ -159,7 +172,7 @@ const usersDummy = [
     status: "submission",
     clockIn: "08:00",
     clockOut: "17:00",
-    
+
     email: "frank.harrison@example.com",
   },
   {
@@ -170,7 +183,7 @@ const usersDummy = [
     status: "wfo",
     clockIn: "08:00",
     clockOut: "17:00",
-    
+
     email: "emma.adams@example.com",
   },
   {
@@ -181,7 +194,7 @@ const usersDummy = [
     status: "wfo",
     clockIn: "08:00",
     clockOut: "17:00",
-    
+
     email: "brandon.stevens@example.com",
   },
   {
@@ -192,7 +205,7 @@ const usersDummy = [
     status: "wfa",
     clockIn: "08:00",
     clockOut: "17:00",
-    
+
     email: "megan.richards@example.com",
   },
   {
@@ -203,7 +216,7 @@ const usersDummy = [
     status: "wfo",
     clockIn: "08:00",
     clockOut: "17:00",
-    
+
     email: "oliver.scott@example.com",
   },
   {
@@ -214,7 +227,7 @@ const usersDummy = [
     status: "wfo",
     clockIn: "08:00",
     clockOut: "17:00",
-    
+
     email: "grace.allen@example.com",
   },
   {
@@ -225,7 +238,7 @@ const usersDummy = [
     status: "wfa",
     clockIn: "08:00",
     clockOut: "17:00",
-    
+
     email: "noah.carter@example.com",
   },
   {
@@ -236,7 +249,7 @@ const usersDummy = [
     status: "wfo",
     clockIn: "08:00",
     clockOut: "17:00",
-    
+
     email: "ava.perez@example.com",
   },
   {
@@ -247,7 +260,7 @@ const usersDummy = [
     status: "wfo",
     clockIn: "08:00",
     clockOut: "17:00",
-    
+
     email: "liam.johnson@example.com",
   },
   {
@@ -258,7 +271,7 @@ const usersDummy = [
     status: "wfo",
     clockIn: "08:00",
     clockOut: "17:00",
-    
+
     email: "sophia.taylor@example.com",
   },
   {
@@ -269,7 +282,7 @@ const usersDummy = [
     status: "wfa",
     clockIn: "08:00",
     clockOut: "17:00",
-    
+
     email: "lucas.harris@example.com",
   },
   {
@@ -280,23 +293,26 @@ const usersDummy = [
     status: "wfo",
     clockIn: "08:00",
     clockOut: "17:00",
-    
+
     email: "mia.robinson@example.com",
   },
 ];
 
 const columnAct = [
-  { name: "NAME", uid: "name" },
-  { name: "ROLE", uid: "role" },
+  { name: "NAME/NIP", uid: "name" },
+  { name: "TANGGAL", uid: "tanggal" },
+  { name: "CLOCK-IN", uid: "clockin" },
+  { name: "CLOCK-OUT", uid: "clockout" },
+  { name: "KETERANGAN", uid: "role" },
   { name: "STATUS", uid: "status" },
   { name: "ACTIONS", uid: "actions" },
 ];
-
 
 const usersDummy2 = [
   {
     id: 1,
     name: "Tony Reichert",
+    clockin: "09.10",
     role: "CEO",
     team: "Management",
     status: "WFH",
@@ -346,4 +362,21 @@ const usersDummy2 = [
   },
 ];
 
-export { usersDummy2, menuItems, topCardList, tableColumns, statusOptions, usersDummy, columnAct};
+const columnCutiAct = [
+  { name: "NAME/NIP", uid: "name" },
+  { name: "TANGGAL", uid: "tanggal" },
+  { name: "KETERANGAN", uid: "role" },
+  // { name: "STATUS", uid: "status" },
+  { name: "ACTIONS", uid: "actions" },
+];
+
+export {
+  columnCutiAct,
+  usersDummy2,
+  menuItems,
+  topCardList,
+  tableColumns,
+  statusOptions,
+  usersDummy,
+  columnAct,
+};
