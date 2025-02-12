@@ -48,24 +48,24 @@ const TopActivityComp = () => {
       <Button
         className="border-none"
         color="secondary"
-        variant="ghost"
+        variant="light"
         radius="md"
         size="sm"
       >
-        <RefreshCw className="text-default-foreground" />
+        <RefreshCw className="text-default-400" />
       </Button>
     );
   };
-  const EditIcon = () => {
+  const AprovalIcon = () => {
     return (
       <Button
         className="border-none"
         color="secondary"
-        variant="ghost"
+        variant="light"
         radius="md"
         size="sm"
       >
-        <UserRoundPen className="text-default-foreground" />
+        <UserRoundPen className="text-defaul-400" />
       </Button>
     );
   };
@@ -85,7 +85,7 @@ const TopActivityComp = () => {
           <div className="flex flex-col">
             <h3>{cellValue}</h3>
             <p className="text-bold text-sm capitalize text-default-400">
-              {user.id} 
+              {user.id}
               {/* ID Berisi NIP Pegawai */}
             </p>
           </div>
@@ -94,9 +94,7 @@ const TopActivityComp = () => {
         return (
           <div className="flex flex-col">
             <p className="text-bold text-sm capitalize">{cellValue}</p>
-            <p className="text-bold text-sm capitalize text-default-400">
-              {user.team}
-            </p>
+            <p className="text-bold text-sm capitalize">{user.team}</p>
           </div>
         );
       case "status":
@@ -120,7 +118,7 @@ const TopActivityComp = () => {
             </Tooltip>
             <Tooltip content="Edit User">
               <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                <EditIcon />
+                <AprovalIcon />
               </span>
             </Tooltip>
           </div>

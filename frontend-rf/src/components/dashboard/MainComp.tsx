@@ -581,8 +581,10 @@ const TableAbsensi = () => {
         );
       case "actions":
         return (
-          <div className="relative flex justify-end gap-2">
-            <Signature className="text-default-400" />
+          <div className="relative flex justify-center gap-2">
+            <button>
+              <Signature className="text-default-400" />
+            </button>
           </div>
         );
       default:
