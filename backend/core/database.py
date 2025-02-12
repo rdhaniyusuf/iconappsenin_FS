@@ -17,4 +17,7 @@ SessionLocal = sessionmaker(
 # Dependency untuk mendapatkan session database
 async def get_db():
     async with SessionLocal() as session:
-        yield session
+        try:
+            yield session
+        finally:
+            await session.close()

@@ -94,4 +94,3 @@ async def login_user_service(db: AsyncSession, user_name: str, user_pass: str):
 
     return {"success": True, "token": token, "user": user_data}
 
-
